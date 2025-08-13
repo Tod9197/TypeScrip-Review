@@ -137,3 +137,4 @@ for (let i: number = 999; i > 0; i--) {
     }
   }
 }
+console.log("問12. for文を使用した計算2 ここまで");
