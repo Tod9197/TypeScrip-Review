@@ -42,3 +42,23 @@ const doubleElement = (arr: number[]): number[] => arr.map((el) => el * 2);
 console.log(doubleElement([4, 7, 11]));
 
 console.log("問33. アロー関数 ここまで");
+
+// 問34. コールバック関数**
+// 1. 数値を引数として受け取り、その数値に対して渡されたコールバック関数を適用して結果を返す関数を作成してください。
+//     - 例: コールバックとして2倍する関数を渡すと、引数が2の場合4を返す。
+function doubleNum(num: number, callback: (result: number) => void): void {
+  const result = num * 2;
+  callback(result);
+}
+doubleNum(12, (result) => {
+  console.log(result);
+});
+// 2. 文字列配列を受け取り、各文字列に対してコールバック関数を適用した結果の新しい配列を返す関数を作成してください。
+function strArr(arr: string[], callback: (result: string) => string): string[] {
+  return arr.map((str) => callback(str));
+}
+console.log(
+  strArr(["t", "y", "p", "e", "s", "c", "r", "i", "p", "t"], (str) =>
+    str.toUpperCase()
+  )
+);
