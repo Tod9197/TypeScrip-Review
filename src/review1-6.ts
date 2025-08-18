@@ -62,3 +62,4 @@ console.log(
     str.toUpperCase()
   )
 );
+console.log("問34. コールバック関数 ここまで");
