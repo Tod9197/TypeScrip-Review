@@ -1,3 +1,5 @@
+import * as readline from "readline";
+
 export {};
 // 問43 APIのPromise
 // `fetch("<https://jsonplaceholder.typicode.com/todos/1>")` を使って、API からデータを取得し、その `title` を取得してコンソールに出力するコードを書いてください。
@@ -86,3 +88,82 @@ fetch("https://jsonplaceholder.typicode.com/invalid-url")
   })
   .then((data) => console.log(data))
   .catch((error) => console.log(error.message));
+
+// 問46. Promise.all と Promise.race**
+
+// 1. `Promise.all` を使用して、`1秒後に "First" を返す Promise` と `2秒後に "Second" を返す Promise` を並行実行し、結果を配列で取得してコンソールに出力するコードを書いてください。
+function getFirst(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("First");
+    }, 1000);
+  });
+}
+function getSecond(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Second");
+    }, 2000);
+  });
+}
+Promise.all([getFirst(), getSecond()])
+  .then((values: string[]) => {
+    console.log(values);
+  })
+  .catch((error: unknown) => console.log(error));
+
+// 2. `Promise.race` を使用して、`1秒後に "Fast"` を返す Promise と `3秒後に "Slow"` を返す Promise を実行し、最初に完了した値を取得するコードを書いてください。
+function getFast(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Fast");
+    }, 1000);
+  });
+}
+function getSlow(): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Slow");
+    }, 2000);
+  });
+}
+Promise.race([getFast(), getSlow()])
+  .then((value) => {
+    console.log(value);
+  })
+  .catch((error: unknown) => console.log(error));
+// 3. `Promise.allSettled` を使用して、`1つは resolve、もう1つは reject する Promise` を処理し、結果をコンソールに出力するコードを書いてください。
+const promise1 = Promise.resolve("成功!!");
+const promise2 = Promise.reject("失敗!!");
+
+Promise.allSettled([promise1, promise2]).then((results) => {
+  results.forEach((result) => console.log(result));
+});
+
+// 問47. 標準入力
+// 下記仕様を満たすプログラムを実装してください。
+// 仕様
+// 「あなたの名前は？」出力
+// ↓
+// 入力 ex) Micael
+// ↓
+// 「Micaelさん、あなたの年齢は？」出力
+// ↓
+// 入力 ex) 20
+// ↓
+// 「Micaelさん（年齢:20）、ご登録ありがとうございます！」出力
+// ↓
+// プログラム終了
+// なお、標準入力はreadlineを使用して実装してください。
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+rl.question("あなたの名前は?", (name: string) => {
+  rl.question(`${name}さん、あなたの年齢は?`, (age: string) => {
+    console.log(`${name}さん(${age}歳)、ご登録ありがとうございます!!`);
+    rl.close();
+  });
+});
