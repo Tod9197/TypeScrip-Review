@@ -80,3 +80,67 @@ lamborghini.move();
 ferrari.move();
 porsche.move();
 console.log("問62. インターフェースの実装 ここまで");
+
+// 問63. ゲッターとセッター**
+// 以下の条件を満たす `Temperature` クラスを作成してください。
+// - `celsius`（数値型、**private**）
+// - `fahrenheit` ゲッターで華氏（`celsius × 9/5 + 32`）を返す
+// - `fahrenheit` セッターで摂氏に変換する（`(value - 32) × 5/9`）
+class Temperature {
+  private _celsius: number;
+  constructor(celsius: number) {
+    this._celsius = celsius;
+  }
+
+  get fahrenheit(): number {
+    return (this._celsius * 9) / 5 + 32;
+  }
+
+  set fahrenheit(value) {
+    this._celsius = ((value - 32) * 5) / 9;
+  }
+}
+
+const temperature = new Temperature(10);
+console.log(temperature.fahrenheit);
+console.log("問63. ゲッターとセッター ここまで");
+
+// 問64. オブジェクトの配列**
+// 以下の条件を満たす `Student` クラスを作成し、配列で管理してください。
+// - `name`（文字列型）
+// - `score`（数値型）
+// - `club`（文字列型）
+// - `students` という `Student` の配列を作成し、複数のインスタンスを追加する
+class Student {
+  private _name: string;
+  private _score: number;
+  private _club: string;
+  constructor(name: string, score: number, club: string) {
+    this._name = name;
+    this._score = score;
+    this._club = club;
+  }
+  get name(): string {
+    return this._name;
+  }
+  get score(): number {
+    return this._score;
+  }
+  get club(): string {
+    return this._club;
+  }
+}
+const students: Student[] = [
+  new Student("Cobby", 495, "American Football"),
+  new Student("Ellen", 488, "tennis"),
+  new Student("Jack", 482, "baseball"),
+];
+console.log(students);
+console.log(students[0]);
+console.log(students[0].club);
+console.log(students[1]);
+console.log(students[1].name);
+console.log(students[2]);
+console.log(students[2].score);
+
+console.log("問64. オブジェクトの配列 ここまで");
