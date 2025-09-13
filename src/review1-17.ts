@@ -7,15 +7,17 @@ export {};
 class Box<T> {
   constructor(private item: T) {}
 
-  getValue(): T {
+  getValue() {
     return this.item;
   }
   setValue(value: T): void {
     this.item = value;
   }
 }
-const box = new Box<string>("Next.js");
+const box = new Box("JavaScript");
+box.setValue("TypeScript");
 console.log(box);
+
 console.log("問69. クラスでのジェネリクス ここまで");
 
 // 問70. 制約付きジェネリクス**
@@ -28,17 +30,26 @@ interface Length {
 function printLength<T extends Length>(value: T): void {
   console.log(value.length);
 }
-printLength("React.js");
-
+printLength("TypeScript is exciting!!");
 // 問71. ジェネリクスとインターフェース**
 // 以下の条件を満たす `Storage` インターフェースを作成してください。
 // - 任意の型 `T` を格納できる
 // - `setItem` メソッドでデータを追加できる
 // - `getItem` メソッドでデータを取得できる
 interface Storage<T> {
-  setItem(data: T): void;
   getItem(): T;
+  setItem(data: T): void;
 }
+const NumberStorage: Storage<number> = {
+  getItem() {
+    return 768;
+  },
+  setItem(data: number) {
+    console.log("保存:", data);
+  },
+};
+console.log(NumberStorage.getItem());
+NumberStorage.setItem(1024);
 
 // 問72. keyof を用いたジェネリクス**
 // 以下の条件を満たす `getProperty` 関数を作成してください。
@@ -47,7 +58,7 @@ interface Storage<T> {
 function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
   return obj[key];
 }
-const student = { name: "Mike", age: 16 };
+const student = { name: "James", age: 17 };
 const studentName = getProperty(student, "name");
 const studentAge = getProperty(student, "age");
 console.log(studentName);
