@@ -1,5 +1,5 @@
 export {};
-import * as fs from "fs";
+import * as path from "path";
 import { promises as fsp } from "fs";
 // ### **85. ファイルの追記（非同期）**
 // 以下の条件を満たす appendToFile 関数を作成してください。
@@ -40,8 +40,26 @@ deleteFile("src/testDelete.txt");
 // - コピー元とコピー先のファイルパスを受け取る
 // - 非同期でファイルをコピーする
 // - 成功したら "コピー完了" を出力する
-
+async function copyFile(
+  sourceFile: string,
+  destinationFile: string
+): Promise<void> {
+  try {
+    await fsp.copyFile(sourceFile, destinationFile);
+    console.log("コピー完了");
+  } catch (error) {
+    console.log("コピー失敗");
+  }
+}
+copyFile("src/sourceFile.txt", "src/destinationFile.txt");
 // ### **88. pathモジュール：絶対パスの取得**
 // 以下の条件を満たす getAbsolutePath 関数を作成してください。
 // - 相対パスを受け取り、絶対パスに変換して返す
 // - path.resolve() を使用すること
+function getAbsolutePath(relativePath: string): string {
+  const absolutePath = path.resolve(relativePath);
+  return absolutePath;
+}
+
+const absPath = getAbsolutePath("src/test/test.txt");
+console.log(absPath);
